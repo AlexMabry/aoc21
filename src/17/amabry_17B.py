@@ -1,5 +1,5 @@
 from aocd import models
-from ..utils import parse_data
+from src.utils import parse_data
 
 # create puzzle
 puzzle = models.Puzzle(year=2021, day=17)

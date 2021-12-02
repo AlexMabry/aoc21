@@ -1,21 +1,23 @@
 from aocd import models
-from ..utils import parse_data
+from src.utils import parse_data
 
 # create puzzle
 puzzle = models.Puzzle(year=2021, day=1)
 
-# regex pattern
-line_pattern = r'(?P<group_name>.*)'
-
 # format data
-input_data = parse_data(puzzle.input_data, is_lines=True, is_numbers=False, regex=line_pattern)
+input_data = parse_data(puzzle.input_data, is_numbers=True)
+data_length = len(input_data)
 
-############################
-# Solve puzzle
-print(input_data)
+increased = 0
 
-answer_to_submit = None
-############################
+previous = sum(input_data[0:3])
+for index in range(data_length-2):
+    current = sum(input_data[index:index+3])
+
+    if current > previous:
+        increased = increased + 1
+
+    previous = current
 
 # submit answer
-puzzle.answer_b = answer_to_submit
+puzzle.answer_b = increased

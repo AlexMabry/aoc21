@@ -2,8 +2,8 @@ import re
 from types import SimpleNamespace
 
 
-def parse_data(puzzle, is_lines: bool = True, is_numbers: bool = False, regex=None):
-    lines = puzzle.input_data.splitlines()
+def parse_data(input_data, is_lines: bool = True, is_numbers: bool = False, regex=None):
+    lines = input_data.splitlines()
     if regex:
         pattern = re.compile(regex)
         if pattern.groupindex.keys():
@@ -16,4 +16,4 @@ def parse_data(puzzle, is_lines: bool = True, is_numbers: bool = False, regex=No
     elif is_lines:
         return lines
     else:
-        return puzzle.input_data
+        return input_data
