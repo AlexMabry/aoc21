@@ -5,17 +5,26 @@ from src.utils import parse_data
 puzzle = models.Puzzle(year=2021, day=2)
 
 # regex pattern
-line_pattern = r'(?P<group_name>.*)'
+line_pattern = r'(?P<command>\w*) (?P<value>[0-9]+)'
 
 # format data
 input_data = parse_data(puzzle.input_data, is_lines=True, is_numbers=False, regex=line_pattern)
 
-############################
-# Solve puzzle
-print(input_data)
+horizontal = 0
+depth = 0
+aim = 0
 
-answer_to_submit = None
-############################
+for pair in input_data:
+    if pair.command == 'forward':
+        horizontal += int(pair.value)
+        depth += aim * int(pair.value)
+
+    if pair.command == 'down':
+        aim += int(pair.value)
+
+    if pair.command == 'up':
+        aim -= int(pair.value)
+
 
 # submit answer
-puzzle.answer_b = answer_to_submit
+puzzle.answer_b = horizontal * depth
