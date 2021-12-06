@@ -5,17 +5,30 @@ from src.utils import parse_data
 puzzle = models.Puzzle(year=2021, day=6)
 
 # regex pattern
-line_pattern = r'(?P<group_name>.*)'
+line_pattern = r'(?P<numbers>.*)'
 
 # format data
-input_data = parse_data(puzzle.input_data, is_lines=True, is_numbers=False, regex=line_pattern)
+input_data = parse_data(puzzle.input_data, is_lines=True, is_numbers=True, regex=line_pattern)
+fishes = [int(n) for n in input_data[0].numbers.split(",")]
 
 ############################
 # Solve puzzle
-print(input_data)
+print(fishes)
 
-answer_to_submit = None
+for day in range(80):
+    new_fish = []
+    for f, fish in enumerate(fishes):
+        if fish == 0:
+            new_fish.append(8)
+            fishes[f] = 6
+        else:
+            fishes[f] -= 1
+
+    fishes += new_fish
+
+print(len(fishes))
+
 ############################
 
 # submit answer
-puzzle.answer_a = answer_to_submit
+puzzle.answer_a = len(fishes)
