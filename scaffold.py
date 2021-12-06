@@ -11,14 +11,14 @@ cwd = Path.cwd()
 name = "amabry"
 year = "2021"
 
-START_DAY = 1
+START_DAY = 5
 END_DAY = 25
 
 src_dir = cwd / "src"
 src_dir.mkdir(exist_ok=True)
 
 for day in range(START_DAY, (END_DAY + 1), 1):
-    day_dir = src_dir / f"{day:02}"
+    day_dir = src_dir / f"d{day:02}"
     shutil.rmtree(day_dir, ignore_errors=True)
     day_dir.mkdir()
     init_py = day_dir / f"__init__.py"
