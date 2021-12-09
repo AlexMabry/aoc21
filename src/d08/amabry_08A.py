@@ -5,17 +5,14 @@ from src.utils import parse_data
 puzzle = models.Puzzle(year=2021, day=8)
 
 # regex pattern
-line_pattern = r'(?P<group_name>.*)'
+line_pattern = r'(?P<digits>[a-g ]+) \| (?P<output>[a-g ]+)'
 
 # format data
-input_data = parse_data(puzzle.input_data, is_lines=True, is_numbers=False, regex=line_pattern)
+entries = parse_data(puzzle.input_data, is_lines=True, is_numbers=False, regex=line_pattern)
 
 ############################
-# Solve puzzle
-print(input_data)
-
-answer_to_submit = None
+easy_numbers = [True for entry in entries for digit in entry.output.split(' ') if len(digit) in [2, 3, 4, 7]]
 ############################
 
 # submit answer
-puzzle.answer_a = answer_to_submit
+puzzle.answer_a = len(easy_numbers)
