@@ -1,3 +1,5 @@
+from collections import defaultdict, deque
+
 from aocd import models
 from src.utils import parse_data
 
@@ -5,17 +7,28 @@ from src.utils import parse_data
 puzzle = models.Puzzle(year=2021, day=12)
 
 # regex pattern
-line_pattern = r'(?P<group_name>.*)'
+line_pattern = r'(?P<left>.*)-(?P<right>.*)'
 
 # format data
 input_data = parse_data(puzzle.input_data, is_lines=True, is_numbers=False, regex=line_pattern)
 
 ############################
-# Solve puzzle
-print(input_data)
+caves = defaultdict(set)
+for row in input_data:
+    caves[row.left].add(row.right)
+    caves[row.right].add(row.left)
 
-answer_to_submit = None
+q = deque(("start", edge) for edge in caves["start"])
+complete_paths = set()
+while q:
+    path = q.pop()
+    if path[-1] == "end":
+        complete_paths.add(path)
+    else:
+        q.extend((*path, edge) for edge in caves[path[-1]] if edge.isupper() or edge not in path)
+
+answer = len(complete_paths)
 ############################
 
 # submit answer
-puzzle.answer_a = answer_to_submit
+puzzle.answer_a = answer
